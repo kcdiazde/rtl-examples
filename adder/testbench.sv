@@ -1,6 +1,9 @@
 module testbench;
 
-    logic [7:0] counter;
+parameter int SIZE = 8;
+parameter int WAIT_TIME = 1 << (2*SIZE);
+
+    logic [SIZE*2-1:0] counter;
     logic a;
     logic b;
     logic c;
@@ -11,7 +14,7 @@ module testbench;
 
     initial begin
         $display("[%0t] Starting...", $time);
-        #1025
+        #WAIT_TIME
         $display("[%0t] Ending...", $time);
         $finish;
     end
@@ -72,20 +75,20 @@ module testbench;
     /* Full Adder ************************************************************/
 
     /* Adder *****************************************************************/
-    logic [3:0] out;
+    logic [SIZE-1:0] out;
     logic carry;
-    logic [4:0] result_real;
-    logic [4:0] result_tb;
+    logic [SIZE:0] result_real;
+    logic [SIZE:0] result_tb;
 
-    logic [3:0] a_adder;
-    logic [3:0] b_adder;
+    logic [SIZE-1:0] a_adder;
+    logic [SIZE-1:0] b_adder;
     
-    assign a_adder = counter[3:0];
-    assign b_adder = counter[7:4];
+    assign a_adder = counter[SIZE-1:0];
+    assign b_adder = counter[SIZE*2-1:SIZE];
     assign result_real= a_adder + b_adder;
     assign result_tb = {carry, out};
 
-    adder #(.SIZE(4)) adder_tb (
+    adder #(.SIZE(SIZE)) adder_tb (
          .a(a_adder),
          .b(b_adder),
          .out(out),
