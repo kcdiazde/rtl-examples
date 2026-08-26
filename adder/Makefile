@@ -2,7 +2,7 @@
 TARGET = Vtestbench
 
 # Verilog source files (space-separated if you have multiple)
-VERILOG_SRCS = testbench.sv half_adder.sv full_adder.sv
+VERILOG_SRCS = testbench.sv half_adder.sv full_adder.sv adder.sv
 
 # Top-level module name
 TOP_MODULE = testbench

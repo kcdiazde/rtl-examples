@@ -1,6 +1,6 @@
 module testbench;
 
-    logic [2:0] counter;
+    logic [7:0] counter;
     logic a;
     logic b;
     logic c;
@@ -11,15 +11,16 @@ module testbench;
 
     initial begin
         $display("[%0t] Starting...", $time);
-        #10
+        #1025
         $display("[%0t] Ending...", $time);
         $finish;
     end
 
     always begin
         #1 counter <= counter + 'b1;
-        $display("Half adder: a = [%0d] b = [%0d] result = [%0d]", a, b, result_tb_half);
-        $display("Full adder: a = [%0d] b = [%0d] c = [%0d] result = [%0d]", a, b, c, result_tb_full);
+        // $display("Half adder: a = [%0d] b = [%0d] result = [%0d]", a, b, result_tb_half);
+        // $display("Full adder: a = [%0d] b = [%0d] c = [%0d] result = [%0d]", a, b, c, result_tb_full);
+        $display("[%0d] + [%0d] = [%0d]", a_adder, b_adder, result_tb);
     end
 
     assign a = counter[0];
@@ -66,8 +67,34 @@ module testbench;
     );
 
     always begin
-        #1 assert(result_real_full == result_tb_full) else $error("Diff result!");
+        #1 assert(result_real_full == result_tb_full) else $error("Diff result in full adder!");
     end
     /* Full Adder ************************************************************/
+
+    /* Adder *****************************************************************/
+    logic [3:0] out;
+    logic carry;
+    logic [4:0] result_real;
+    logic [4:0] result_tb;
+
+    logic [3:0] a_adder;
+    logic [3:0] b_adder;
+    
+    assign a_adder = counter[3:0];
+    assign b_adder = counter[7:4];
+    assign result_real= a_adder + b_adder;
+    assign result_tb = {carry, out};
+
+    adder #(.SIZE(4)) adder_tb (
+         .a(a_adder),
+         .b(b_adder),
+         .out(out),
+         .carry(carry)
+    );
+
+    always begin
+        #1 assert(result_real == result_tb) else $error("Diff result in adder!");
+    end
+    /* Adder *****************************************************************/
 
 endmodule
