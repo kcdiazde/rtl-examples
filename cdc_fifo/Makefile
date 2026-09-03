@@ -1,11 +1,11 @@
 # Target executable name
-TARGET = Vram
+TARGET = Vtestbench
 
 # Verilog source files (space-separated if you have multiple)
-VERILOG_SRCS = ram.sv
+VERILOG_SRCS = testbench.sv gray_counter.sv
 
 # Top-level module name
-TOP_MODULE = ram
+TOP_MODULE = testbench
 
 # Verilator Flags
 # - Wall: Enable all warnings
