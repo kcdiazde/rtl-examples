@@ -8,6 +8,12 @@ module test_counter;
     end
 
     initial begin
+        // Enable waveform generation
+        $dumpfile("waveform.vcd");
+        $dumpvars(0, test_counter);
+    end
+
+    initial begin
        $display("[%0t] Starting...", $time);
        #50
        $display("[%0t] Ending...", $time);

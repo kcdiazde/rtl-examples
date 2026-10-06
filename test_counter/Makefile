@@ -15,6 +15,7 @@ TOP_MODULE = test_counter
 VERILATOR_FLAGS = -Wall \
                   --binary \
                   --timing \
+                  --trace \
                   --top-module $(TOP_MODULE) \
                   -CFLAGS "-std=c++20 -fcoroutines" \
                   -j 0
